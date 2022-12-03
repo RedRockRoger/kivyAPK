@@ -1,0 +1,110 @@
+https://www.youtube.com/watch?v=B__UOykI0Mo
+
+https://colab.research.google.com/
+
+► 
+login
+connnect
+File
+New Notebook - 
+
+► Setup build environment
+upload KivySimple.ipynb
+open Files panel by clicking folder icon on far left
+right click in Files panel to upload main.py (MUST be named main.py)
+create directory "data"
+right click to upload lightbulb.png
+move lightbulb.png into ./data
+
+► Do the initial buildozer setup
+run ipynb file commands one at a time
+edit buildozer.spec
+	edit "title ="  and choose the application title
+	edit "package.name = " and choose the package name - NO SPACES!!!
+	edit "icon.filename = ....." and replace "icon.png" with "lightbulb.png"
+
+Worked with generic buildozer.spec!!!   Dec 2, 2022 - able to change icon to prove config changes
+	Now on Dec 3, trying to absolutely prove all works before committing to Git repo,
+	app builds, but errors out in trying to install on phone.  Will have to debug this.
+	Going to try a much simpler "Hello World" kivy program and see if that works.
+	Checking in to Git repo at this stage anyway with caveats.
+
+get new code cell -  click on "+Code" in bar above build pane
+enter:  !buildozer -v android debug logcat (press ENTER)
+resulting APK will be in bin
+
+► Download to phone
+Connect phone to Win10 PC
+right click on APK in bin directory and download to PC - takes a long time
+	for file chooser window to appear
+attach Android phone to PC via USB cable
+use Windows File Explorer to copy APK to Internal Storage / Kivy Apps
+	Make Kivy directory if it does not exist, name has a space in it
+
+► Install/Run app
+on phone install Files app from Google Play Store
+click on Files app to open
+scroll down to bottom
+tap "Internal storage" 
+tap Kivy Apps
+tap Kivysimple...... app with lightbulb icon
+tap Install (or Update)
+tap INSTALL ANYWAY
+tap Don't Send
+Most likely as you are tapping Don't Send, the Open button will disappear
+	start over tapping the lightbulb
+	tap Open quickly when it appears
+	After the first time tapping "Don't Send", you won't have to again
+Tap in white User Name box and type some stuff - multiline acceptable
+Tap on "password"
+Type some stuff (will show as *******)
+	When you finally type ENTER, the app is done and cannot be exited
+	except by navigating back to home screen
+The file in the Git project named KivySimpleA12capture.mp4 is a screen capture of
+	the process of the install/run process.  Watching it before trying to do
+	it will be helpful.
+ 
+
+
+► Record phone screen via USB cable onto PC
+► ► ► ► adb.exe bundled in ScrCpy can be used for debug
+	access to phone logs
+Download and install ScrCpy from https://github.com/Genymobile/scrcpy
+scrcpy --record=c:\temp\A12capture.mp4 --max-fps=15
+
+
+► Debug prep on phone
+Settings
+Tap About Phone
+Tap “Software information”
+Tap “Build number” seven times
+Enter your pattern (i.e. 4 digit pass code), PIN or password to enable the Developer options menu
+The "Developer options" menu will now appear in your Settings menu
+Enable Stay Awake
+Enable USB debugging
+
+► Debug 
+Connect phone to BearyPi Linux PC
+IMPORTANT ===>  Note current time to be able to capture only relevant part of log
+Open File Manager on phone
+navigate to Internal Storage / Kivy Apps
+click on app
+choose install and say yes to all prompts
+choose "Open" when it appears at the bottom of screen
+App will fail
+Open emacs as root on BearyPi
+do the following commands in a shell in emacs
+'adb start-server'
+'adb devices'  Be sure phone is seen at this step
+'adb shell'
+"logcat -t '12-01 07:15:41.000' "  (but use the time your wrote down)
+
+adb shell > c:\temp\capturelogcat.txt 2>&1
+    then input logcat -t '12-03 07:30:00.000'
+
+When enough time has gone by to have the log spit out, close the CMD window
+	Log should have been closed and can be inspected
+
+When log stops coming out, save to a file
+Search for Traceback and you will find the error
+
