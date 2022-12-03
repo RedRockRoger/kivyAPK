@@ -84,6 +84,8 @@ Enable Stay Awake
 Enable USB debugging
 
 ► Debug 
+====> This is VERY specific to my Raspberry Pi Linux platform  <====
+====> Documenting this more for myself than anybody else  <====
 Connect phone to BearyPi Linux PC
 IMPORTANT ===>  Note current time to be able to capture only relevant part of log
 Open File Manager on phone
